@@ -2,12 +2,14 @@ schema: spec-driven
 
 context: |
   Tech stack: PHP 8.4, Symfony 8.1, Doctrine ORM 3.x, SQLite, Twig, PHPUnit, Infection
+  JS tooling: ESLint 9 (flat config), Prettier, Vitest (jsdom), Husky, lint-staged
   Architecture: layered (Controller -> Service -> Repository -> Entity), enforced by deptrac
-  Code style: strict types, PHP-CS-Fixer (@PhpCsFixer), Prettier, 4-space indent
-  Static analysis: PHPStan level 10 with haspadar rules (immutable services, parameter naming)
+  Code style: strict types, PHP-CS-Fixer (@PhpCsFixer), Prettier (2-space indent for JS), 4-space indent (PHP)
+  Static analysis: PHPStan level 10 with haspadar rules (immutable services, parameter naming); ESLint (flat config) for JS
   Domain: personal expense tracking
-  Testing: PHPUnit with Symfony test framework, Infection for mutation testing
+  Testing: PHPUnit with Symfony test framework, Vitest (jsdom) for JS tests, Infection for mutation testing
   Pre-commit: Husky with lint-staged
+  Verification: npm run lint and npm test must pass for JS changes
   Architectural approach: follow martinfowler.com/articles/llm-and-dsls.html — build semantic model and DSL as harness for LLM-generated code
 
 rules:

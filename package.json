@@ -7,8 +7,11 @@
     "test": "tests"
   },
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1",
-    "prepare": "husky"
+    "prepare": "husky",
+    "lint": "eslint assets/",
+    "lint:fix": "eslint assets/ --fix",
+    "test": "vitest run",
+    "test:watch": "vitest"
   },
   "repository": {
     "type": "git",
@@ -21,8 +24,13 @@
   },
   "homepage": "https://github.com/marcmorente/expense-tracking#readme",
   "devDependencies": {
+    "@hotwired/stimulus": "^3.2.2",
+    "eslint": "^9.22.0",
+    "globals": "^17.7.0",
     "husky": "^9.1.7",
+    "jsdom": "^26.1.0",
     "lint-staged": "^17.2.0",
-    "prettier": "^3.9.6"
+    "prettier": "^3.9.6",
+    "vitest": "^3.1.1"
   }
 }
