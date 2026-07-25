@@ -9,6 +9,9 @@ $finder = (new Finder())
     ->in(__DIR__)
     ->exclude('var')
     ->exclude('vendor')
+    ->exclude('node_modules')
+    ->exclude('assets/vendor')
+    ->exclude('public/assets')
     ->notPath([
         'config/bundles.php',
         'config/reference.php',

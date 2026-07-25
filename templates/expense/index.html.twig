@@ -1,0 +1,31 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Expenses{% endblock %}
+
+{% block body %}
+    <h1>Expenses</h1>
+
+    {{ form_start(form) }}
+        {{ form_errors(form) }}
+        {{ form_row(form.description) }}
+        {{ form_row(form.amountInCents) }}
+        {{ form_row(form.spentOn) }}
+        {{ form_row(form.record) }}
+    {{ form_end(form) }}
+
+    <div {{ stimulus_controller('expense-total') }}>
+        <ul class="expense-list">
+            {% for expense in expenses %}
+                <li data-expense-total-target="amount" data-amount-in-cents="{{ expense.amountInCents }}">
+                    <time datetime="{{ expense.spentOn|date('Y-m-d') }}">{{ expense.spentOn|date('Y-m-d') }}</time>
+                    <span class="expense-description">{{ expense.description }}</span>
+                    <span class="expense-amount">{{ expense.amountInCents }}</span>
+                </li>
+            {% else %}
+                <li class="expense-empty">No expenses yet.</li>
+            {% endfor %}
+        </ul>
+
+        <p>Total: <output data-expense-total-target="total">0.00</output></p>
+    </div>
+{% endblock %}

@@ -1,16 +1,21 @@
 schema: spec-driven
 
 context: |
-  Tech stack: PHP 8.4, Symfony 8.1, Doctrine ORM 3.x, SQLite, Twig, PHPUnit, Infection
-  Frontend tooling: ESLint 9 (flat config), Prettier, Stylelint 17 (standard config), Vitest (jsdom), Husky, lint-staged
-  Architecture: layered (Controller -> Service -> Repository -> Entity), enforced by deptrac
-  Code style: strict types, PHP-CS-Fixer (@PhpCsFixer), Prettier (2-space indent for JS), 4-space indent (PHP)
-  Static analysis: PHPStan level 10 with haspadar rules (immutable services, parameter naming); ESLint (flat config) for JS; Stylelint (standard config) for CSS
-  Domain: personal expense tracking
-  Testing: PHPUnit with Symfony test framework, Vitest (jsdom) for JS tests, Infection for mutation testing
-  Pre-commit: Husky with lint-staged
-  Verification: npm run lint, npm run lint:css, and npm test must pass for frontend changes
-  Architectural approach: follow martinfowler.com/articles/llm-and-dsls.html — build semantic model and DSL as harness for LLM-generated code
+  Read AGENTS.md first. It is the single source of truth for the stack, the layer
+  rules, the PHP constraints, the database platform, the test patterns and the
+  verification command. Do not duplicate that content here.
+
+  Domain: personal expense tracking.
+
+  Golden path: copy the Expense slice. AGENTS.md lists every file in it.
+
+  Verification: run `composer verify`. It runs every gate for PHP, YAML, Twig,
+  the service container, JavaScript and CSS. A change is not done until it passes.
+
+  Architectural approach: follow martinfowler.com/articles/llm-and-dsls.html.
+  Build a semantic model and a DSL as a harness for LLM-generated code. The
+  haspadar ruleset already forces part of this: constructors only assign
+  properties, so invariants belong in types and in the Service layer.
 
 rules:
   proposal:
