@@ -1,0 +1,22 @@
+# Installed code
+**/node_modules/
+/vendor/
+/assets/vendor/
+
+# Build output and caches
+/var/
+/public/assets/
+/public/bundles/
+*.cache
+
+# Generated lock and reference files
+composer.lock
+package-lock.json
+symfony.lock
+/config/reference.php
+
+# Agent tool directories, kept in the shape their tools write them
+/.claude/
+/.codex/
+/.opencode/
+/.pi/

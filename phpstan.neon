@@ -6,6 +6,19 @@ parameters:
 
     reportUnmatchedIgnoredErrors: false
 
+    # These exceptions report a programmer mistake or a malformed request. You
+    # fix the cause, you do not document or catch them. Without this list the
+    # haspadar.missingThrows and haspadar.throwsCount rules cannot both hold,
+    # because one @throws tag is the maximum per method.
+    exceptions:
+        uncheckedExceptionClasses:
+            - LogicException
+            - UnexpectedValueException
+            - Error
+            # Every form exception reports wrong use of the form API, for example
+            # a field name that the form does not have.
+            - Symfony\Component\Form\Exception\ExceptionInterface
+
     haspadar:
         testsPaths:
             - */tests/*
@@ -13,22 +26,20 @@ parameters:
         parameterName:
             pattern: '^[a-z][a-zA-Z]{2,}$'
 
-        beImmutable:
-            excludedClasses:
-                - App\Entity\*
-
+    # WARNING: an ignored identifier must match the rule identifier exactly.
+    # A wrong name silently ignores nothing. Read the identifier from the
+    # PHPStan output, never from the rule class name.
     ignoreErrors:
-        # Method/property PHPDoc rules (class-level docblocks only)
-        - identifier: haspadar.phpDocMissingMethod
-        - identifier: haspadar.phpDocMissingProperty
-        - identifier: haspadar.phpDocMissingParam
-        - identifier: haspadar.phpDocParamDescription
+        # PHPDoc is required on classes only, not on methods, properties or params.
+        - identifier: haspadar.phpdocMissingMethod
+        - identifier: haspadar.phpdocMissingProperty
+        - identifier: haspadar.phpdocMissingParam
+        - identifier: haspadar.phpdocParamDescription
         - identifier: haspadar.phpdocParamOrder
-        - identifier: haspadar.phpDocPunctuationMethod
-        - identifier: haspadar.phpDocEmptyMethod
-        - identifier: haspadar.returnDescriptionCapital
-        - identifier: haspadar.paramDescriptionCapital
-        - identifier: haspadar.noPhpDocForOverridden
+        - identifier: haspadar.paramCapital
+        - identifier: haspadar.returnCapital
+        - identifier: haspadar.noPhpdocOverride
         - identifier: haspadar.atclauseOrder
-        - identifier: haspadar.noLineCommentBeforeDeclaration
+        # Line comments above declarations are allowed.
+        - identifier: haspadar.noLineCommentBefore
         - identifier: haspadar.noInlineComment

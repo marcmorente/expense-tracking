@@ -1,4 +1,10 @@
 # editorconfig.org
+#
+# PHP and Twig use 4 spaces. Prettier owns every other file type except Markdown,
+# and Prettier uses 2 spaces. Keep both tools in agreement: if you change a width
+# here, change .prettierrc too.
+#
+# No formatter owns Markdown. This file is the only rule for it.
 
 root = true
 
@@ -10,8 +16,11 @@ indent_style = space
 insert_final_newline = true
 trim_trailing_whitespace = true
 
-[{compose.yaml,compose.*.yaml}]
+# File types that Prettier formats.
+[*.{js,ts,jsx,tsx,json,jsonc,yaml,yml,css,scss}]
 indent_size = 2
 
+# Markdown has no formatter. Trailing spaces make a hard line break.
 [*.md]
+indent_size = 2
 trim_trailing_whitespace = false
