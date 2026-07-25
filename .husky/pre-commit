@@ -1,5 +1,2 @@
 npx lint-staged
-composer phpstan:analyse
-composer deptrac:analyse
-composer test
-npm run test
+composer verify

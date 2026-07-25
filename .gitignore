@@ -53,3 +53,8 @@ Thumbs.db
 ###> infection ###
 /var/infection/
 ###< infection ###
+
+###> phpunit/phpunit ###
+/phpunit.xml
+/.phpunit.cache/
+###< phpunit/phpunit ###

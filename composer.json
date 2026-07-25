@@ -13,10 +13,14 @@
     "symfony/dotenv": "8.1.*",
     "symfony/expression-language": "8.1.*",
     "symfony/flex": "^2",
+    "symfony/form": "8.1.*",
     "symfony/framework-bundle": "8.1.*",
     "symfony/property-access": "8.1.*",
     "symfony/runtime": "8.1.*",
+    "symfony/security-csrf": "8.1.*",
     "symfony/twig-bundle": "8.1.*",
+    "symfony/uid": "8.1.*",
+    "symfony/validator": "8.1.*",
     "symfony/yaml": "8.1.*"
   },
   "require-dev": {
@@ -29,7 +33,10 @@
     "infection/infection": "^0.34",
     "phpstan/extension-installer": "*",
     "phpstan/phpstan": "*",
+    "phpstan/phpstan-phpunit": "^2.0",
     "phpunit/phpunit": "^13.2",
+    "symfony/browser-kit": "8.1.*",
+    "symfony/css-selector": "8.1.*",
     "symfony/maker-bundle": "*",
     "symfony/stimulus-bundle": "*",
     "symfony/ux-live-component": "*",
@@ -87,9 +94,40 @@
     "cs:fix": "php-cs-fixer fix",
     "deptrac": "deptrac",
     "deptrac:analyse": "deptrac analyse",
+    "lint:twig": "bin/console lint:twig templates/ --env=test",
+    "lint:container": "bin/console lint:container --env=test",
+    "lint:yaml": "bin/console lint:yaml config/ --env=test",
     "test": "phpunit",
     "test:coverage": "phpunit --coverage-html var/coverage/html",
-    "infection": "infection --threads=4"
+    "infection": "XDEBUG_MODE=coverage infection --threads=4",
+    "verify": [
+      "@cs:check",
+      "@phpstan:analyse",
+      "@deptrac:analyse",
+      "@lint:yaml",
+      "@lint:twig",
+      "@lint:container",
+      "@test",
+      "npm run verify"
+    ],
+    "verify:full": [
+      "@verify",
+      "@infection"
+    ]
+  },
+  "scripts-descriptions": {
+    "verify": "Runs every quality gate. Run this before you report a task as done.",
+    "verify:full": "Runs every gate plus mutation testing. Use it before you finish a feature.",
+    "cs:check": "Reports PHP style problems without changing files.",
+    "cs:fix": "Fixes PHP style problems.",
+    "phpstan:analyse": "Runs static analysis at level 10 with the haspadar rules.",
+    "deptrac:analyse": "Checks that the layer dependencies follow deptrac.yaml.",
+    "lint:twig": "Checks the Twig syntax of every template.",
+    "lint:container": "Checks that injected services match the type declarations.",
+    "lint:yaml": "Checks the YAML syntax of every configuration file.",
+    "test": "Runs the PHPUnit test suite.",
+    "test:coverage": "Writes an HTML coverage report. Needs Xdebug enabled in php.ini.",
+    "infection": "Runs mutation testing. Needs Xdebug enabled in php.ini. minMsi is 100."
   },
   "conflict": {
     "symfony/symfony": "*"
