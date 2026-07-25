@@ -1,5 +1,9 @@
 {
   "*.php": "vendor/bin/php-cs-fixer fix --config=.php-cs-fixer.dist.php",
   "*.js": "eslint --fix",
-  "*.{json,yaml,yml,md,js,ts,jsx,tsx,css,scss}": "prettier --write"
+  "*.css": [
+    "stylelint --fix",
+    "prettier --write"
+  ],
+  "*.{json,yaml,yml,md,js,ts,jsx,tsx,scss}": "prettier --write"
 }
