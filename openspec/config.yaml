@@ -1,20 +1,22 @@
 schema: spec-driven
 
-# Project context (optional)
-# This is shown to AI when creating artifacts.
-# Add your tech stack, conventions, style guides, domain knowledge, etc.
-# Example:
-#   context: |
-#     Tech stack: TypeScript, React, Node.js
-#     We use conventional commits
-#     Domain: e-commerce platform
+context: |
+  Tech stack: PHP 8.4, Symfony 8.1, Doctrine ORM 3.x, SQLite, Twig, PHPUnit, Infection
+  Architecture: layered (Controller -> Service -> Repository -> Entity), enforced by deptrac
+  Code style: strict types, PHP-CS-Fixer (@PhpCsFixer), Prettier, 4-space indent
+  Static analysis: PHPStan level 10 with haspadar rules (immutable services, parameter naming)
+  Domain: personal expense tracking
+  Testing: PHPUnit with Symfony test framework, Infection for mutation testing
+  Pre-commit: Husky with lint-staged
+  Architectural approach: follow martinfowler.com/articles/llm-and-dsls.html — build semantic model and DSL as harness for LLM-generated code
 
-# Per-artifact rules (optional)
-# Add custom rules for specific artifacts.
-# Example:
-#   rules:
-#     proposal:
-#       - Keep proposals under 500 words
-#       - Always include a "Non-goals" section
-#     tasks:
-#       - Break tasks into chunks of max 2 hours
+rules:
+  proposal:
+    - Include rollback plan
+  specs:
+    - Use Given/When/Then format for scenarios
+  design:
+    - Include sequence diagrams for complex flows
+  tasks:
+    - Each task should be completable in < 2 hours
+    - Include acceptance criteria
