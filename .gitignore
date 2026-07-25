@@ -30,3 +30,17 @@ Thumbs.db
 ###> Symfony CLI ###
 /.symfony.local/
 ###< Symfony CLI ###
+
+###> friendsofphp/php-cs-fixer ###
+/.php-cs-fixer.php
+/.php-cs-fixer.cache
+###< friendsofphp/php-cs-fixer ###
+
+###> deptrac ###
+/.deptrac.cache
+/.deptrac.cache.*
+###< deptrac ###
+
+###> Node.js ###
+/node_modules/
+###< Node.js ###

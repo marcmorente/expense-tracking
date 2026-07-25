@@ -1,0 +1,91 @@
+deptrac:
+  paths:
+    - ./src/
+  exclude_files: ~
+  ignore_uncovered_internal_classes: false
+
+  layers:
+    - name: Controller
+      collectors:
+        - type: classNameRegex
+          value: '#[\\\\]Controller[\\\\]#'
+
+    - name: Service
+      collectors:
+        - type: classNameRegex
+          value: '#[\\\\]Service[\\\\]#'
+
+    - name: Repository
+      collectors:
+        - type: classNameRegex
+          value: '#[\\\\]Repository[\\\\]#'
+
+    - name: Entity
+      collectors:
+        - type: classNameRegex
+          value: '#[\\\\]Entity[\\\\]#'
+
+    - name: Event
+      collectors:
+        - type: classNameRegex
+          value: '#[\\\\]Event[\\\\]#'
+
+    - name: Listener
+      collectors:
+        - type: classNameRegex
+          value: '#[\\\\]EventListener[\\\\]#'
+
+    - name: Form
+      collectors:
+        - type: classNameRegex
+          value: '#[\\\\]Form[\\\\]#'
+
+    - name: Validator
+      collectors:
+        - type: classNameRegex
+          value: '#[\\\\]Validator[\\\\]#'
+
+    - name: Kernel
+      collectors:
+        - type: classLike
+          value: App\Kernel
+
+    - name: Migrations
+      collectors:
+        - type: classNameRegex
+          value: '#DoctrineMigrations[\\\\]#'
+
+  ruleset:
+    Controller:
+      - Service
+      - Entity
+      - Form
+      - Validator
+      - Event
+
+    Service:
+      - Repository
+      - Entity
+      - Event
+
+    Repository:
+      - Entity
+
+    Entity: ~
+
+    Event: ~
+
+    Listener:
+      - Event
+      - Service
+
+    Form:
+      - Entity
+      - Validator
+
+    Validator:
+      - Entity
+
+    Kernel: ~
+
+    Migrations: ~
