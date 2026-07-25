@@ -1,0 +1,115 @@
+<?php
+
+declare(strict_types=1);
+
+namespace App\Tests\Functional\Controller;
+
+use App\Controller\ExpenseController;
+use App\Tests\DatabaseSchema;
+use PHPUnit\Framework\Attributes\CoversClass;
+use Symfony\Bundle\FrameworkBundle\KernelBrowser;
+use Symfony\Bundle\FrameworkBundle\Test\WebTestCase;
+use Symfony\Component\HttpFoundation\Response;
+
+/**
+ * @internal
+ */
+#[CoversClass(ExpenseController::class)]
+final class ExpenseControllerTest extends WebTestCase
+{
+    use DatabaseSchema;
+
+    public function testItShowsAnEmptyListAndAForm(): void
+    {
+        $client = $this->clientWithSchema();
+
+        $client->request('GET', '/expenses');
+
+        self::assertResponseIsSuccessful();
+        self::assertSelectorTextContains('.expense-empty', 'No expenses yet.');
+        self::assertSelectorExists('form input[name="expense[description]"]');
+    }
+
+    public function testItRecordsAnExpenseAndShowsItInTheList(): void
+    {
+        $client = $this->clientWithSchema();
+        $client->request('GET', '/expenses');
+
+        $client->submitForm('Record expense', [
+            'expense[description]' => 'Coffee beans',
+            'expense[amountInCents]' => '1299',
+            'expense[spentOn]' => '2026-07-20',
+        ]);
+
+        self::assertResponseRedirects('/expenses');
+        $client->followRedirect();
+        self::assertSelectorTextContains('.expense-description', 'Coffee beans');
+        self::assertSelectorTextContains('.expense-amount', '1299');
+    }
+
+    public function testItRejectsABlankDescription(): void
+    {
+        $client = $this->clientWithSchema();
+        $client->request('GET', '/expenses');
+
+        $client->submitForm('Record expense', [
+            'expense[description]' => '',
+            'expense[amountInCents]' => '1299',
+            'expense[spentOn]' => '2026-07-20',
+        ]);
+
+        self::assertResponseStatusCodeSame(Response::HTTP_BAD_REQUEST);
+        self::assertSelectorTextContains('.expense-empty', 'No expenses yet.');
+    }
+
+    public function testItRejectsAnAmountOfZero(): void
+    {
+        $client = $this->clientWithSchema();
+        $client->request('GET', '/expenses');
+
+        $client->submitForm('Record expense', [
+            'expense[description]' => 'Coffee beans',
+            'expense[amountInCents]' => '0',
+            'expense[spentOn]' => '2026-07-20',
+        ]);
+
+        self::assertResponseStatusCodeSame(Response::HTTP_BAD_REQUEST);
+        self::assertSelectorTextContains('.expense-empty', 'No expenses yet.');
+    }
+
+    public function testItRejectsAMalformedDay(): void
+    {
+        $client = $this->clientWithSchema();
+        $client->request('GET', '/expenses');
+
+        $client->submitForm('Record expense', [
+            'expense[description]' => 'Coffee beans',
+            'expense[amountInCents]' => '1299',
+            'expense[spentOn]' => '20 July 2026',
+        ]);
+
+        self::assertResponseStatusCodeSame(Response::HTTP_BAD_REQUEST);
+        self::assertSelectorTextContains('.expense-empty', 'No expenses yet.');
+    }
+
+    public function testItRejectsARequestWithoutASubmittedForm(): void
+    {
+        $client = $this->clientWithSchema();
+
+        $client->request('POST', '/expenses');
+
+        self::assertResponseStatusCodeSame(Response::HTTP_BAD_REQUEST);
+    }
+
+    /**
+     * Returns a client that keeps one in-memory database for every request.
+     */
+    private function clientWithSchema(): KernelBrowser
+    {
+        $client = self::createClient();
+        $client->disableReboot();
+        $this->createDatabaseSchema();
+
+        return $client;
+    }
+}
