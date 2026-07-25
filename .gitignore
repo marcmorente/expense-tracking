@@ -44,3 +44,12 @@ Thumbs.db
 ###> Node.js ###
 /node_modules/
 ###< Node.js ###
+
+###> phpunit ###
+/var/cache/.phpunit/
+/var/coverage/
+###< phpunit ###
+
+###> infection ###
+/var/infection/
+###< infection ###

@@ -1,0 +1,18 @@
+{
+    "$schema": "https://raw.githubusercontent.com/infection/infection/main/resources/schema.json",
+    "source": {
+        "directories": [
+            "src"
+        ],
+        "excludes": [
+            "Kernel.php"
+        ]
+    },
+    "timeout": 10,
+    "logs": {
+        "html": "var/infection/infection.html",
+        "text": "var/infection/infection.log"
+    },
+    "minMsi": 100,
+    "minCoveredMsi": 100
+}
