@@ -44,7 +44,8 @@ final class ExpenseControllerTest extends WebTestCase
         self::assertResponseRedirects('/expenses');
         $client->followRedirect();
         self::assertSelectorTextContains('.expense-description', 'Coffee beans');
-        self::assertSelectorTextContains('.expense-amount', '1299');
+        self::assertSelectorTextContains('.expense-amount', '€12.99');
+        self::assertSelectorTextContains('[role="alert"]', 'Expense recorded.');
     }
 
     public function testItRejectsABlankDescription(): void

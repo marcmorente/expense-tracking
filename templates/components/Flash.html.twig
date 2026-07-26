@@ -1,0 +1,21 @@
+{% props type = 'success', message = '', dismissible = false %}
+
+{% set palette = {
+  success: { bg: 'bg-green-50', text: 'text-green-800' },
+  error: { bg: 'bg-red-50', text: 'text-red-800' },
+  warning: { bg: 'bg-yellow-50', text: 'text-yellow-800' },
+  info: { bg: 'bg-blue-50', text: 'text-blue-800' },
+}|merge({ _default: { bg: 'bg-gray-50', text: 'text-gray-800' } }) %}
+
+{% set colors = palette[type] ?? palette._default %}
+
+<div role="alert" class="rounded-lg p-4 text-sm font-medium {{ colors.bg }} {{ colors.text }}" {{ dismissible ? 'data-controller="flash"' : '' }}>
+  {{ message }}
+  {% if dismissible %}
+    <button
+      class="ml-2 inline-flex items-center justify-center rounded-md p-1 transition hover:opacity-75"
+      data-action="click->flash#dismiss"
+      aria-label="Close"
+    >&times;</button>
+  {% endif %}
+</div>

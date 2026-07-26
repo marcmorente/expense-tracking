@@ -51,6 +51,8 @@ final class ExpenseController extends AbstractController
             $this->submittedValues->day($form, 'spentOn'),
         );
 
+        $this->addFlash('success', 'Expense recorded.');
+
         return $this->redirectToRoute('expense_index');
     }
 

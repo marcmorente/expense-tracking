@@ -18,7 +18,11 @@
         <script src="https://cdn.jsdelivr.net/npm/frankenphp-hot-reload/+esm" type="module"></script>
         {% endif %}
     </head>
-    <body>
+    <body class="bg-gray-50 text-gray-900 antialiased">
+        {% block flashes %}
+            {% include '_flash_messages.html.twig' %}
+        {% endblock %}
+
         {% block body %}{% endblock %}
     </body>
 </html>
