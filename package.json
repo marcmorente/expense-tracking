@@ -10,13 +10,11 @@
     "prepare": "husky",
     "lint": "eslint assets/ --max-warnings=0",
     "lint:fix": "eslint assets/ --fix",
-    "lint:css": "stylelint 'assets/**/*.css' --max-warnings=0",
-    "lint:css:fix": "stylelint 'assets/**/*.css' --fix",
-    "format": "prettier --write \"**/*.{json,jsonc,yaml,yml,js,ts,jsx,tsx,css,scss}\"",
-    "format:check": "prettier --check \"**/*.{json,jsonc,yaml,yml,js,ts,jsx,tsx,css,scss}\"",
+    "format": "prettier --write \"**/*.{json,jsonc,yaml,yml,js,ts,jsx,tsx,css,scss,twig}\"",
+    "format:check": "prettier --check \"**/*.{json,jsonc,yaml,yml,js,ts,jsx,tsx,css,scss,twig}\"",
     "test": "vitest run",
     "test:watch": "vitest",
-    "verify": "npm run format:check && npm run lint && npm run lint:css && npm test"
+    "verify": "npm run format:check && npm run lint && npm test"
   },
   "repository": {
     "type": "git",
@@ -30,14 +28,14 @@
   "homepage": "https://github.com/marcmorente/expense-tracking#readme",
   "devDependencies": {
     "@hotwired/stimulus": "^3.2.2",
+    "@ttskch/prettier-plugin-tailwindcss-anywhere": "^0.1.2",
     "eslint": "^9.22.0",
     "globals": "^17.7.0",
     "husky": "^9.1.7",
     "jsdom": "^26.1.0",
     "lint-staged": "^17.2.0",
     "prettier": "^3.9.6",
-    "stylelint": "^17.14.1",
-    "stylelint-config-standard": "^40.0.0",
+    "prettier-plugin-tailwindcss": "^0.8.1",
     "vitest": "^3.1.1"
   }
 }

@@ -21,7 +21,8 @@
     "symfony/twig-bundle": "8.1.*",
     "symfony/uid": "8.1.*",
     "symfony/validator": "8.1.*",
-    "symfony/yaml": "8.1.*"
+    "symfony/yaml": "8.1.*",
+    "symfonycasts/tailwind-bundle": "^1.0"
   },
   "require-dev": {
     "deptrac/deptrac": "^4.7",

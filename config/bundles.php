@@ -1,13 +1,27 @@
 <?php
 
+declare(strict_types=1);
+
+use Doctrine\Bundle\DoctrineBundle\DoctrineBundle;
+use Doctrine\Bundle\MigrationsBundle\DoctrineMigrationsBundle;
+use Symfony\Bundle\FrameworkBundle\FrameworkBundle;
+use Symfony\Bundle\MakerBundle\MakerBundle;
+use Symfony\Bundle\TwigBundle\TwigBundle;
+use Symfony\UX\LiveComponent\LiveComponentBundle;
+use Symfony\UX\StimulusBundle\StimulusBundle;
+use Symfony\UX\Turbo\TurboBundle;
+use Symfony\UX\TwigComponent\TwigComponentBundle;
+use Symfonycasts\TailwindBundle\SymfonycastsTailwindBundle;
+
 return [
-    Symfony\Bundle\FrameworkBundle\FrameworkBundle::class => ['all' => true],
-    Symfony\Bundle\MakerBundle\MakerBundle::class => ['dev' => true],
-    Doctrine\Bundle\DoctrineBundle\DoctrineBundle::class => ['all' => true],
-    Doctrine\Bundle\MigrationsBundle\DoctrineMigrationsBundle::class => ['all' => true],
-    Symfony\UX\TwigComponent\TwigComponentBundle::class => ['all' => true],
-    Symfony\UX\StimulusBundle\StimulusBundle::class => ['all' => true],
-    Symfony\UX\LiveComponent\LiveComponentBundle::class => ['all' => true],
-    Symfony\UX\Turbo\TurboBundle::class => ['all' => true],
-    Symfony\Bundle\TwigBundle\TwigBundle::class => ['all' => true],
+    FrameworkBundle::class => ['all' => true],
+    MakerBundle::class => ['dev' => true],
+    DoctrineBundle::class => ['all' => true],
+    DoctrineMigrationsBundle::class => ['all' => true],
+    TwigComponentBundle::class => ['all' => true],
+    StimulusBundle::class => ['all' => true],
+    LiveComponentBundle::class => ['all' => true],
+    TurboBundle::class => ['all' => true],
+    TwigBundle::class => ['all' => true],
+    SymfonycastsTailwindBundle::class => ['all' => true],
 ];

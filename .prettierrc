@@ -5,5 +5,18 @@
   "singleQuote": false,
   "trailingComma": "es5",
   "semi": true,
-  "arrowParens": "always"
+  "arrowParens": "always",
+  "plugins": [
+    "prettier-plugin-tailwindcss",
+    "@ttskch/prettier-plugin-tailwindcss-anywhere"
+  ],
+  "tailwindStylesheet": "./assets/styles/app.css",
+  "overrides": [
+    {
+      "files": "*.twig",
+      "options": {
+        "parser": "anywhere"
+      }
+    }
+  ]
 }

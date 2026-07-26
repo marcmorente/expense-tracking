@@ -11,11 +11,10 @@ composer verify
 
 It runs every gate in this order: PHP style, PHPStan, deptrac, YAML lint, Twig
 lint, container lint, PHPUnit, then `npm run verify` (Prettier check, ESLint,
-Stylelint, Vitest). Run it before you report a task as done. Do not run the gates
+Vitest). Run it before you report a task as done. Do not run the gates
 one by one. Do not add a new way to run them.
 
-Fix commands: `composer cs:fix`, `npm run lint:fix`, `npm run lint:css:fix`,
-`npm run format`.
+Fix commands: `composer cs:fix`, `npm run lint:fix`, `npm run format`.
 
 ## The golden path
 
@@ -161,11 +160,15 @@ and a 500 response is the correct loud signal. Do not catch it in the controller
 - Put pure logic in a module under `assets/<feature>/`, and test it directly.
 - Put DOM work in a Stimulus controller under `assets/controllers/`.
   `assets/stimulus_bootstrap.js` registers every file in that directory.
-- Prettier owns the format of every file except PHP, Twig and Markdown. Never
+- Prettier owns the format of every file except PHP and Markdown. Never
   fight it. `.editorconfig` and `.prettierrc` must agree.
 - Markdown has no formatter. Wrap prose by hand near 80 columns. A table row may
   pass 80 columns, because a row cannot wrap.
-- ESLint and Stylelint run with `--max-warnings=0`. A warning fails the build.
+- ESLint runs with `--max-warnings=0`. A warning fails the build.
+- Tailwind CSS v4 is installed via `symfonycasts/tailwind-bundle`. Run
+  `php bin/console tailwind:build --watch` in a terminal during development.
+  Run `php bin/console tailwind:build --minify` before `asset-map:compile` for
+  deployment.
 
 ## Stack
 
@@ -174,7 +177,7 @@ and a 500 response is the correct loud signal. Do not catch it in the controller
 - Twig, AssetMapper, Stimulus, Turbo
 - PHPUnit 13, Vitest 3 with jsdom, Infection
 - PHPStan level 10 with `haspadar/phpstan-rules`, deptrac, PHP-CS-Fixer
-- ESLint 9 flat config, Prettier, Stylelint 17
+- ESLint 9 flat config, Prettier, Tailwind CSS v4
 
 ## The SQLite invariant
 
