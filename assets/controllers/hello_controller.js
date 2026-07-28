@@ -1,4 +1,5 @@
 import { Controller } from "@hotwired/stimulus";
+/* stimulusFetch: 'lazy' */
 
 /*
  * This is an example Stimulus controller!

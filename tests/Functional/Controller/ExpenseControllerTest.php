@@ -27,7 +27,9 @@ final class ExpenseControllerTest extends WebTestCase
 
         self::assertResponseIsSuccessful();
         self::assertSelectorTextContains('.expense-empty', 'No expenses yet.');
+        self::assertSelectorExists('turbo-frame#expenses');
         self::assertSelectorExists('form input[name="expense[description]"]');
+        self::assertSelectorExists('form[data-turbo-frame="expenses"]');
     }
 
     public function testItRecordsAnExpenseAndShowsItInTheList(): void

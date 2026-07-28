@@ -1,5 +1,6 @@
 import { Controller } from "@hotwired/stimulus";
 import { formatCents, sumAmountsInCents } from "../expense/amount.js";
+/* stimulusFetch: 'lazy' */
 
 /*
  * Shows the total of the expenses that the page lists.
