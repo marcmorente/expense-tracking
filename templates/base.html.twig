@@ -20,7 +20,9 @@
     </head>
     <body class="bg-gray-50 text-gray-900 antialiased">
         {% block flashes %}
-            {% include '_flash_messages.html.twig' %}
+            <div id="flash-messages" class="mx-auto flex max-w-2xl flex-col items-end space-y-3 px-4 pt-5">
+                {% include '_flash_messages.html.twig' %}
+            </div>
         {% endblock %}
 
         {% block body %}{% endblock %}

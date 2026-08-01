@@ -1,0 +1,19 @@
+<twig:Turbo:Stream:Replace target="#expenses">
+    {% block content %}
+        <twig:Turbo:Frame id="expenses">
+            {% include 'expense/_form.html.twig' %}
+        </twig:Turbo:Frame>
+    {% endblock %}
+</twig:Turbo:Stream:Replace>
+
+<twig:Turbo:Stream:Replace target="#expense-list">
+    {% block content %}
+        {% include 'expense/_list.html.twig' %}
+    {% endblock %}
+</twig:Turbo:Stream:Replace>
+
+<twig:Turbo:Stream:Update target="#flash-messages">
+    {% block content %}
+        {% include '_flash_messages.html.twig' %}
+    {% endblock %}
+</twig:Turbo:Stream:Update>

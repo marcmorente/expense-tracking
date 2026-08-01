@@ -50,6 +50,32 @@ final class ExpenseControllerTest extends WebTestCase
         self::assertSelectorTextContains('[role="alert"]', 'Expense recorded.');
     }
 
+    public function testItUpdatesTheListWithATurboStream(): void
+    {
+        $client = $this->clientWithSchema();
+        $client->request('GET', '/expenses');
+
+        $client->submitForm(
+            'Record expense',
+            [
+                'expense[description]' => 'Coffee beans',
+                'expense[amountInCents]' => '1299',
+                'expense[spentOn]' => '2026-07-20',
+            ],
+            'POST',
+            ['HTTP_ACCEPT' => 'text/vnd.turbo-stream.html'],
+        );
+
+        self::assertResponseIsSuccessful();
+        self::assertResponseHeaderSame('Content-Type', 'text/vnd.turbo-stream.html; charset=UTF-8');
+        $responseContent = $client->getResponse()->getContent();
+        self::assertIsString($responseContent);
+        self::assertStringContainsString('targets="#expense-list"', $responseContent);
+        self::assertStringContainsString('Coffee beans', $responseContent);
+        self::assertStringContainsString('targets="#flash-messages"', $responseContent);
+        self::assertStringContainsString('Expense recorded.', $responseContent);
+    }
+
     public function testItRejectsABlankDescription(): void
     {
         $client = $this->clientWithSchema();

@@ -12,6 +12,8 @@ use Symfony\Component\Form\FormInterface;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Attribute\Route;
+use Symfony\UX\Turbo\TurboBundle;
+use Symfony\UX\Turbo\TurboStreamResponse;
 
 /**
  * Shows the expense list and accepts new expenses.
@@ -52,6 +54,18 @@ final class ExpenseController extends AbstractController
         );
 
         $this->addFlash('success', 'Expense recorded.');
+
+        if (str_contains((string) $request->headers->get('Accept', ''), TurboBundle::STREAM_MEDIA_TYPE)) {
+            return new TurboStreamResponse(
+                $this->renderView(
+                    'expense/create.stream.html.twig',
+                    [
+                        'expenses' => $this->expenseService->listNewestFirst(),
+                        'form' => $this->createForm(ExpenseType::class),
+                    ],
+                ),
+            );
+        }
 
         return $this->redirectToRoute('expense_index');
     }

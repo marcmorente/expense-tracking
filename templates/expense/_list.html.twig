@@ -1,0 +1,20 @@
+<div id="expense-list" data-controller="expense-total" class="mt-6 rounded-xl bg-white shadow-sm ring-1 ring-gray-200">
+    <ul class="divide-y divide-gray-100">
+        {% for expense in expenses %}
+            <li data-expense-total-target="amount" data-amount-in-cents="{{ expense.amountInCents }}" class="flex items-center justify-between px-4 py-3 transition hover:bg-gray-50">
+                <div class="flex items-center gap-4">
+                    <time datetime="{{ expense.spentOn|date('Y-m-d') }}" class="min-w-20 text-sm text-gray-500">{{ expense.spentOn|date('M j') }}</time>
+                    <span class="expense-description text-sm text-gray-900">{{ expense.description }}</span>
+                </div>
+                <span class="expense-amount inline-flex items-center rounded-full bg-blue-50 px-3 py-1 text-sm font-semibold text-blue-700">€{{ (expense.amountInCents / 100)|number_format(2, '.', '') }}</span>
+            </li>
+        {% else %}
+            <li class="expense-empty px-4 py-12 text-center text-sm text-gray-500">No expenses yet. Record your first expense above.</li>
+        {% endfor %}
+    </ul>
+
+    <div class="flex items-center justify-between border-t border-gray-100 px-4 py-3">
+        <span class="text-sm font-medium text-gray-700">Total</span>
+        <span class="text-lg font-bold text-gray-900">€ <output data-expense-total-target="total">0.00</output></span>
+    </div>
+</div>
