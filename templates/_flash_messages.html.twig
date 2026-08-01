@@ -1,5 +1,5 @@
 {% for type, messages in app.flashes %}
   {% for message in messages %}
-    <twig:Flash :type="type" :message="message" dismissible />
+    <twig:Toast :type="type" :message="message" dismissible />
   {% endfor %}
 {% endfor %}

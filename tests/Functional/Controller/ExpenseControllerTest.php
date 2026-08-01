@@ -10,6 +10,7 @@ use PHPUnit\Framework\Attributes\CoversClass;
 use Symfony\Bundle\FrameworkBundle\KernelBrowser;
 use Symfony\Bundle\FrameworkBundle\Test\WebTestCase;
 use Symfony\Component\HttpFoundation\Response;
+use Symfony\UX\TwigComponent\Test\InteractsWithTwigComponents;
 
 /**
  * @internal
@@ -18,6 +19,7 @@ use Symfony\Component\HttpFoundation\Response;
 final class ExpenseControllerTest extends WebTestCase
 {
     use DatabaseSchema;
+    use InteractsWithTwigComponents;
 
     public function testItShowsAnEmptyListAndAForm(): void
     {
@@ -30,6 +32,44 @@ final class ExpenseControllerTest extends WebTestCase
         self::assertSelectorExists('turbo-frame#expenses');
         self::assertSelectorExists('form input[name="expense[description]"]');
         self::assertSelectorExists('form[data-turbo-frame="expenses"]');
+    }
+
+    public function testItRendersEveryAlertType(): void
+    {
+        $palettes = [
+            'success' => 'bg-green-50',
+            'error' => 'bg-red-50',
+            'warning' => 'bg-yellow-50',
+            'info' => 'bg-blue-50',
+            'unknown' => 'bg-gray-50',
+        ];
+
+        foreach ($palettes as $type => $background) {
+            $rendered = $this->renderTwigComponent(
+                'Alert',
+                ['type' => $type, 'message' => 'Example alert'],
+            );
+            $alert = $rendered->crawler()->filter('[role="alert"]');
+
+            self::assertCount(1, $alert);
+            self::assertStringContainsString($background, (string) $alert->attr('class'));
+            self::assertStringContainsString('Example alert', $alert->text());
+        }
+    }
+
+    public function testItOnlyRendersAnAlertCloseButtonWhenDismissible(): void
+    {
+        $dismissible = $this->renderTwigComponent(
+            'Alert',
+            ['message' => 'Dismissible alert', 'dismissible' => true],
+        )->crawler();
+        $notDismissible = $this->renderTwigComponent(
+            'Alert',
+            ['message' => 'Persistent alert'],
+        )->crawler();
+
+        self::assertCount(1, $dismissible->filter('button[data-action="click->alert#dismiss"]'));
+        self::assertCount(0, $notDismissible->filter('button'));
     }
 
     public function testItRecordsAnExpenseAndShowsItInTheList(): void
@@ -47,7 +87,7 @@ final class ExpenseControllerTest extends WebTestCase
         $client->followRedirect();
         self::assertSelectorTextContains('.expense-description', 'Coffee beans');
         self::assertSelectorTextContains('.expense-amount', '€12.99');
-        self::assertSelectorTextContains('[role="alert"]', 'Expense recorded.');
+        self::assertSelectorTextContains('[role="status"]', 'Expense recorded.');
     }
 
     public function testItUpdatesTheListWithATurboStream(): void
@@ -72,8 +112,25 @@ final class ExpenseControllerTest extends WebTestCase
         self::assertIsString($responseContent);
         self::assertStringContainsString('targets="#expense-list"', $responseContent);
         self::assertStringContainsString('Coffee beans', $responseContent);
+        self::assertStringContainsString('action="append"', $responseContent);
         self::assertStringContainsString('targets="#flash-messages"', $responseContent);
         self::assertStringContainsString('Expense recorded.', $responseContent);
+    }
+
+    public function testItRendersToastRolesForNormalAndErrorMessages(): void
+    {
+        $success = $this->renderTwigComponent(
+            'Toast',
+            ['type' => 'success', 'message' => 'Saved'],
+        )->crawler();
+        $error = $this->renderTwigComponent(
+            'Toast',
+            ['type' => 'error', 'message' => 'Failed'],
+        )->crawler();
+
+        self::assertSame('status', $success->filter('[role="status"]')->attr('role'));
+        self::assertSame('alert', $error->filter('[role="alert"]')->attr('role'));
+        self::assertSame('5000', $success->filter('[data-controller="toast"]')->attr('data-toast-duration-value'));
     }
 
     public function testItRejectsABlankDescription(): void

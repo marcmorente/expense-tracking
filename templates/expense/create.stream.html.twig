@@ -12,8 +12,8 @@
     {% endblock %}
 </twig:Turbo:Stream:Replace>
 
-<twig:Turbo:Stream:Update target="#flash-messages">
+<twig:Turbo:Stream:Append target="#flash-messages">
     {% block content %}
         {% include '_flash_messages.html.twig' %}
     {% endblock %}
-</twig:Turbo:Stream:Update>
+</twig:Turbo:Stream:Append>

@@ -1,19 +1,19 @@
 import { Application } from "@hotwired/stimulus";
 import { afterEach, beforeEach, describe, expect, it } from "vitest";
-import FlashController from "./flash_controller.js";
+import AlertController from "./alert_controller.js";
 
-describe("flash_controller", () => {
+describe("alert_controller", () => {
   let application;
 
   beforeEach(async () => {
     document.body.innerHTML = `
-      <div data-controller="flash">
-        <button data-action="click->flash#dismiss" aria-label="Close">x</button>
+      <div data-controller="alert">
+        <button data-action="click->alert#dismiss" aria-label="Close">x</button>
       </div>
     `;
 
     application = new Application(document.documentElement);
-    application.register("flash", FlashController);
+    application.register("alert", AlertController);
     await application.start();
   });
 
@@ -23,7 +23,7 @@ describe("flash_controller", () => {
   });
 
   it("removes the element on dismiss", () => {
-    const element = document.querySelector("[data-controller='flash']");
+    const element = document.querySelector("[data-controller='alert']");
 
     document.querySelector("button").click();
 
